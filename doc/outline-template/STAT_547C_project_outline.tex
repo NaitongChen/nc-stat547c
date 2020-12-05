@@ -12,26 +12,40 @@
 \usepackage{booktabs}
 \usepackage{amsmath,amsthm,amssymb,amsfonts}
 
-\usepackage[sorting=none,backend=biber,bibstyle=alphabetic,citestyle=alphabetic,giveninits=true,natbib=true]{biblatex}
+\usepackage[sorting=none,backend=bibtex,bibstyle=alphabetic,citestyle=alphabetic,giveninits=true,natbib=true]{biblatex}
 \bibliography{../../ref/STAT_547C.bib} % add the title and location of your bibliography file
 
 \begin{document}
 
 % NOTE: You will replace the title below with your actual Title.
-\makeGenericHeader{Replace with your working title}{Project Outline}
+\makeGenericHeader{Asymptotic Normality of Maximum Likelihood Estimators}{Project Outline}
 \vspace{-2cm}
-
 
 %%%%%%%%%%%%%%%%%%%
 \section{Background}
 
-Set the scope of the project; why it's interesting/important; etc.
+For this project, I would like to focus on the proof of the asymptotic normality of maximum likelihood estimators in the univariate case under standard regularity conditions. In particular, I would like to establish the Cramer-Rao lower bound for unbiased estimators, as well as the asympotic normality and efficiency of maximum likelihood estimators.
+
+In addition to presenting these classic result, I hope to extend the report to an open discussion on the closeness between the asymptotic normal distribution and the unknown distribution of the maximum likelihood estimator computed using the finite observations at hand. This can be motivated by some simulation studies that show the effect of sample size on the normal approximation of the distribution of our estimators.
+
+These results are important in that it justifies the behaviour of such estimators with theoretical rigour. The fact that, given a sufficiently large sample, some arbitrary maximum likelihood estimator approximately follows the well-studied normal distirbution centred at the (unknown) true value unifies how we can interpret this large class of estimators and how we can apply them to solving other problems. In addition, since (unbiased) maximum likelihood estimators are asymptotically efficient, it confirms that these estimators are the best we have in terms of achieving minimal variance.
+
+When solving problems in practice, we rely on the qualitative fact that our estimator converges to a normal distribution. It then becomes difficult to assess how close the distribution of our maximum likelihood estimator at hand is to the normal distribution that it converges to. Fortunately, there are some bounds established on the distance between the asymptotic distribution and the unknown distance of a maximum likelihood estimator based on finite observations. This can lead to many interesting open questions that can help practitioners better evaluate the quality of their maximum likelihood estimators.
+
+One of the open questions that I have in mind already is on establishing an upper bound on the error between the maximum likelihood estimator based on finite observations and the true parameter value, taking advantage of the results developed by \cite{anastasiou2015bounds}.
 
 %%%%%%%%%%%%%%%%%%%
 \section{Technical aspects}
 
-What technical knowledge/tools will be required?
+To begin, we need to first define \textbf{consistency of an estimator, unbiasedness of an estimator, convergence in distribution}, as well as \textbf{convergence in probability}. In addition, we need to define and establish some basic properties of the \textbf{score function} as well as the \textbf{fisher information}.
 
+With these tools at hand, the Cramer-Rao lower bound can be established using the \textbf{Cauchy-Schwartz inequality} and rules of differentiation.
+
+To show the asymptotic normality of maximum likelihood estimators, we need to first show that they are consistent under regularity conditions. This can be achieved by using \textbf{Jensen's inequality} and \textbf{the law of large numbers}.
+
+The asymptotic normality of maximum likelihood estimators can then be derived by using \textbf{Taylor's theorem (mean value theorem), the central limit theorem, Slutzky's theorem}, as well as \textbf{the law of large numbers}. The asymptotic efficiency of maximum likelihood estimators follows once we have established asymptotic normality.
+
+Then to assess the closeness between the asymptotic normal distribution and the unknown distribution of the maximum likelihood estimator computed using the finite observations at hand in terms of Zolotarev distance, we employ, once again, \textbf{Taylor's theorem}, along with the \textbf{delta method, Stein's method}, and the \textbf{law of total expectation}. Although as a part of the open discussion, I do not plan to dive too deep into these concepts.
 
 %%%%%%%%%%%%%%%%%%%
 \section{Literature}
@@ -39,23 +53,29 @@ What technical knowledge/tools will be required?
 The key references for this project are:
 
 \begin{itemize}
-  \item \cite{}
+  \item \cite{hogg2005introduction} contains outlines of all three proofs that I would like to establish for this report: Cramer-Rao lower bound, asymptotic normality and efficiency of maximum likelihood estimators.
+  \item \cite{anastasiou2015bounds} presents results of quantifying the distance between the asymptotic normal distribution and the unknown distribution of the maximum likelihood estimator computed using the finite observations at hand.
 \end{itemize}
-
 
 %%%%%%%%%%%%%%%%%%%
 \section{Plan}
 
 I will carry out this project with the following sequence of steps: 
 \begin{enumerate}
-  \item ...
+  \item Carefully read the referenced literature while taking notes of the key steps taken to get to the main results.
+  \item Sketch the development of the main results in a way that I am most comfortable with.
+  \item Fill in the details such as defining concepts and proving theorems used in the main proof.
+  \item Review literature that dicuss the significance and applications of the results.
+  \item Conduct simulations that verify and visualize the asymptotic normality of some simple maximum likelihood estimators as well as the effect of sample size on the quality of the normal approximation.
+  \item Discuss an open question related to bounding the normal approximation of maximum likelihood estimators.
+  \item Putting the report together in a way that the open question is naturally motivated by the body of the report.
+  \item Create exercise problems on the topic.
 \end{enumerate}
-
 
 %%%%%%%%%%%%%%%%%%%
 \section{Why I'm interested in this topic}
 
-
+The concepts and properties concerning maximum likelihoods estimators seem so fundamental that I tend to take them for granted. I believe this is a great opportunity for me to carefully go through some important results of the maximum likelihood estimators and develop some deeper understandings of these results. At the same time, throughout my undergraduate studies, we were left with the unsatisfying heuristic that a sample of size 25 or 30 is considered large without any further justification. Studying the results developed in the referenced aritcle and exploring the effect of sample size will hopefully provide some concrete insights into the accuracy of these approximations to the asymptotic distributions.
 
 %%%%%%%%%%%%%%%%%%%
 \printbibliography
