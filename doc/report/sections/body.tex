@@ -32,6 +32,7 @@ Throughout the report, we assume the following regularity conditions.
 \item (R3) $\theta_0$ is an iterior point in $\Theta$.
 \item (R4) $f(x;\theta)$ is twice differentiable in $\theta$.
 \item (R5) The integral $\int f(x;\theta)$ can be different twice in $\theta$ under the integral sign.
+\item (R6) $\hat{\theta}$ is the unique solution to $\frac{\partial l(\theta)}{\theta} = 0$.
 \end{itemize}
 
 \subsection{Intermediate Results}
@@ -131,31 +132,23 @@ I(\theta) = -\bbE_\theta\left[ \frac{\partial^2\log f(X;\theta)}{\partial \theta
 We first establish the consistency of MLE.\\\\
 \textbf{Lemma 3}: Under regularity conditions, $\hat{\theta}$ is a consistent estimator of $\theta_0$.
 \begin{proof}
-By dropping the condition that $\theta\neq\theta_0$, Lemma 1 states that
+We begin by showing that the equation $\frac{\partial l(\theta\mid x)}{\partial\theta}=0$ has a solution $\hat{\theta}_n$ that converges in probability to $\theta_0$.\\\\
+Since $\theta_0$ is an iterior point of $\Theta$, we can find $a>0$ such that $\theta_0 \in (\theta_0-a, \theta_0+a) \subset \Theta$. Then define the event
 \begin{align}
-\lim_{n\to\infty}P_{\theta_0}\left( L(\theta_0 \mid X) \geq L(\theta \mid X) \right) = 1. \label{eqn:geq}
+S_n = \left\{ x: l(\theta_0 \mid x) > l(\theta_0 - a \mid x) \cap l(\theta_0 \mid x) > l(\theta_0 + a \mid x) \right\}.
 \end{align}
-And by definition of $\hat{\theta}_n$, \bred (explain n and X) \ered,
+Lemma 1 says, under $P_{\theta_0}$, when $n$ approaches infinity, $\theta_0$ is the unique maximizer to $L(\theta\mid x)$, which implies that it is also the unique maximizer to $l(\theta\mid x)$. Then clearly $\lim_{n\to\infty}P_{\theta_0}(S_n) = 1$.\\\\
+Note since $l(\theta_0\mid x) > l(\theta_0-a\mid x)$ and $l(\theta_0\mid x) > l(\theta_0+a\mid x)$, with $f(\theta; x)$ being continous and differentiable, there must exists, for any $x\in S_n$, a local maximum in $(\theta_0-a, \theta_0+a)$. Denote this value $\hat{\theta}_n$, then $\left.\frac{\partial l(\theta\mid x)}{\partial\theta}\right\vert_{\theta=\hat{\theta}_n}=0$.\\\\
+Then for all $a>0$ small enough, we can find a sequence of $\hat{\theta}$ such that
 \begin{align}
-L(\hat{\theta}_n \mid X) \geq L(\theta_0 \mid X), \forall X. \label{eqn:leq}
+\lim_{n\to\infty}P_{\theta_0}\left( |\hat{\theta}_n - \theta_0| < a \right) = 1.
 \end{align}
-By letting $\theta = \hat{\theta}_n$ for each $n$, we have by \cref{eqn:leq},
+By choosing $\hat{\theta}_n$ to be the one closest to $\theta_0$, denoted $\theta^*_n$, we have identified a sequence $\left(\theta^*_n\right)_{n\geq1}$, independent of $a$, such that
 \begin{align}
-\lim_{n\to\infty}P_{\theta_0}\left( L(\theta_0 \mid X) \leq L(\hat{\theta}_n \mid X) \right) = 1,
+\lim_{n\to\infty}P_{\theta_0}\left( |\hat{\theta}_n - \theta_0| < a \right) = 1, \forall a > 0.
 \end{align}
-and by \cref{eqn:geq},
-\begin{align}
-\lim_{n\to\infty}P_{\theta_0}\left( L(\theta_0 \mid X) \geq L(\hat{\theta}_n \mid X) \right) = 1.
-\end{align}
-Together, 
-\begin{align}
-\lim_{n\to\infty}P_{\theta_0}\left( L(\theta_0 \mid X) = L(\hat{\theta}_n \mid X) \right) = 1. \label{eqn:equal}
-\end{align}
-Lemma 1 implies $\theta_0$ is the unique maximizer of $L(\theta|X)$ under $P_{\theta_0}$ as $n$ approaches infinity, so \cref{eqn:equal} implies 
-\begin{align}
-\lim_{n\to\infty}P_{\theta_0}(\theta_0 = \hat{\theta}_n) = 1 \implies \lim_{n\to\infty}P_{\theta_0}\left( \left| \hat{\theta}_n - \theta_0 \right| > \epsilon \right) = 0, \forall \epsilon > 0.
-\end{align}
-We then have that $\hat{\theta}$ is a consistent estimator of $\theta_0$.
+This precisely means that $\hat{\theta}_n \convP \theta_0$.\\\\
+Now note that under regularity conditions, $\hat{\theta}_n$ is the unique solution to $\frac{\partial l(\theta\mid x)}{\partial\theta}=0$. Therefore, we conclude that $\hat{\theta}$ is a consistent estimator of $\theta_0$.
 \end{proof}
 $ $\\
 We now use this fact to prove the asymptotic normality of MLE.\\\\
@@ -235,3 +228,31 @@ Therefore for any unbiased estimator $Y$ of $\theta_0$, we have $\var(Y) \geq \f
 $ $\\
 Note the lower bound on the variance is exactly the asymptotic variance of $\hat{\theta}$. This means that asymptotically, the MLE achieves the smallest possible variance out of all unbiased estimators of $\theta$. While this is a nice property, it remains rather theoretical. In practice, when we work with finitely many observations, it is not clear how far away we are from asymptotic normality. And existing heuristics from undergraduate statistics courses such as calling samples larger than $25$ or $30$ large enough is far from satisfying. Fortunately, \cite{anastasiou2015bounds} have done some pioneer work aimed at answering this exact question. We turn in the next section for a brief illustration of their result on the the closeness to the asymptotic normal distribution from the MLE approximated using finitely many observations.
 % ...
+
+%\begin{proof}
+%By dropping the condition that $\theta\neq\theta_0$, Lemma 1 states that
+%\begin{align}
+%\lim_{n\to\infty}P_{\theta_0}\left( L(\theta_0 \mid X) \geq L(\theta \mid X) \right) = 1. \label{eqn:geq}
+%\end{align}
+%And by definition of $\hat{\theta}_n$, \bred (explain n and X) \ered,
+%\begin{align}
+%L(\hat{\theta}_n \mid X) \geq L(\theta_0 \mid X), \forall X. \label{eqn:leq}
+%\end{align}
+%By letting $\theta = \hat{\theta}_n$ for each $n$, we have by \cref{eqn:leq},
+%\begin{align}
+%\lim_{n\to\infty}P_{\theta_0}\left( L(\theta_0 \mid X) \leq L(\hat{\theta}_n \mid X) \right) = 1,
+%\end{align}
+%and by \cref{eqn:geq},
+%\begin{align}
+%\lim_{n\to\infty}P_{\theta_0}\left( L(\theta_0 \mid X) \geq L(\hat{\theta}_n \mid X) \right) = 1.
+%\end{align}
+%Together, 
+%\begin{align}
+%\lim_{n\to\infty}P_{\theta_0}\left( L(\theta_0 \mid X) = L(\hat{\theta}_n \mid X) \right) = 1. \label{eqn:equal}
+%\end{align}
+%Lemma 1 implies $\theta_0$ is the unique maximizer of $L(\theta|X)$ under $P_{\theta_0}$ as $n$ approaches infinity, so \cref{eqn:equal} implies 
+%\begin{align}
+%\lim_{n\to\infty}P_{\theta_0}(\theta_0 = \hat{\theta}_n) = 1 \implies \lim_{n\to\infty}P_{\theta_0}\left( \left| \hat{\theta}_n - \theta_0 \right| > \epsilon \right) = 0, \forall \epsilon > 0.
+%\end{align}
+%We then have that $\hat{\theta}$ is a consistent estimator of $\theta_0$.
+%\end{proof}
