@@ -1,194 +1,172 @@
 % !TEX root = ../main.tex
 
 % Body section
-\section{Body}
-First we set up the notaions and assumptions that are used throughout the report.
-\subsection{Notations and Assumptions}
-Let $X_1,\cdots,X_n$ be \iid continuous random variables in $\bbR$ with probability density function $f(x;\theta_0)$, where $\theta_0 \in \Theta$ is a unknown parameter.\\\\
-Write the likelihood function
-\begin{align}
-L(\theta) = \prod_{i=1}^n f(x_i;\theta),
-\end{align}
-and subsequently the log-likelihood function
-\begin{align}
-l(\theta) = \sum_{i=1}^n \log f(x_i;\theta).
-\end{align}
-Then the maximum likelihood estimator can be computed as
-\begin{align}
-\hat{\theta} = \argmax_{\theta\in\Theta}l(\theta) = \argmax_{\theta\in\Theta}L(\theta).
-\end{align}
-Note then since \bred conditons \ered, a necessary consequence is that
-\begin{align}
-\left.\frac{\partial l(\theta)}{\partial \theta} \right\vert_{\theta=\theta_0} = 0.
-\end{align}
-We use $\bbE_{\theta}[X]$ to denote expectation with respect to $X$ under $f(x;\theta)$. Using this notation we define the Fisher information
-\begin{align}
-I(\theta) = \bbE_{\theta}\left[ \left( \frac{\partial}{\partial\theta}\log f(X;\theta) \right)^2 \right]. \label{eqn:fisher}
-\end{align}
-Throughout the report, we assume the following regularity conditions.
-\begin{itemize}
-\item (R1) $f(x;\theta)$ is identifiable: $\theta_1\neq\theta_2\implies f(x;\theta_1)\neq f(x;\theta_2)$.
-\item (R2) $f(x;\theta)$ has common support for all $\theta\in\Theta$.
-\item (R3) $\theta_0$ is an iterior point in $\Theta$.
-\item (R4) $f(x;\theta)$ is twice differentiable in $\theta$.
-\item (R5) The integral $\int f(x;\theta)$ can be different twice in $\theta$ under the integral sign.
-\item (R6) $\hat{\theta}$ is the unique solution to $\frac{\partial l(\theta)}{\theta} = 0$.
-\end{itemize}
-
+\section{Asymptotic Normality and Efficiency of MLE}
+omg
 \subsection{Intermediate Results}
 We prove two lemmas that are essential to developing the main results of this report.\\\\
-\textbf{Lemma 1}: Under regularity conditions, \bred (define $P_{\theta_0}$), \ered
-\begin{align}
+\begin{lemma} \label{lem:1}
+Under regularity conditions,
+\begin{align*}
 \lim_{n\to\infty} P_{\theta_0}\left( L(\theta_0 \mid X) > L(\theta \mid X) \right) = 1, \forall \theta \neq \theta_0.
-\end{align}
+\end{align*}
+\end{lemma}
 \begin{proof}
 We begin by taking the log on both sides of the inequality on the LHS and rearrange. 
 \begin{align}
-L(\theta_0 \mid X) > L(\theta \mid X) &\implies \sum_{i=1}^n \log f(X_i;\theta_0) > \sum_{i=1}^n \log f(X_i;\theta)\\
-&\implies \sum_{i=1}^n \left(\log f(X_i;\theta_0) - \log f(X_i;\theta)\right) < 0\\
+L(\theta_0 \mid X) > L(\theta \mid X) &\implies \sum_{i=1}^n \log f(X_i;\theta_0) > \sum_{i=1}^n \log f(X_i;\theta)\nonumber\\
+&\implies \sum_{i=1}^n \left(\log f(X_i;\theta_0) - \log f(X_i;\theta)\right) < 0\nonumber \\
 &\implies \frac{1}{n}\sum_{i=1}^n\log\left( \frac{f(X_i;\theta)}{f(X_i;\theta_0)} \right) < 0. \label{eqn:rearrange}
 \end{align}
 Since $X_i$'s are \iid, the summands are independent, and so by the Weak Law of Large Numbers,
-\begin{align}
+\begin{align*}
 \frac{1}{n}\sum_{i=1}^n\log\left( \frac{f(X_i;\theta)}{f(X_i;\theta_0)} \right) &\convP \bbE_{\theta_0}\left[ \log \left( \frac{f(X_1; \theta)}{f(X_1; \theta_0)} \right) \right].
-\end{align}
+\end{align*}
 Note that $-\log(\cdot)$ is strictly convex, then by Jensen's inequality, we can establish, on the RHS of the above equation,
-\begin{align}
+\begin{align*}
 -\bbE_{\theta_0}\left[ \log \left( \frac{f(X_1; \theta)}{f(X_1; \theta_0)} \right) \right] = \bbE_{\theta_0}\left[ -\log \left( \frac{f(X_1; \theta)}{f(X_1; \theta_0)} \right) \right] > -\log \bbE_{\theta_0}\left[ \frac{f(X_1; \theta)}{f(X_1; \theta_0)}  \right].
-\end{align}
+\end{align*}
 Now note
-\begin{align}
+\begin{align*}
 \log \bbE_{\theta_0} \left[ \frac{f(X_1; \theta)}{f(X_1; \theta_0)} \right] &= \log \int_\bbR \frac{f(x; \theta)}{f(x; \theta_0)} f(x; \theta_0) dx = \log\int_\bbR \frac{f(x; \theta)} dx = \log 1 = 0.
-\end{align}
+\end{align*}
 Together, we have
 \begin{align}
 \frac{1}{n}\sum_{i=1}^n\log\left( \frac{f(X_i;\theta)}{f(X_i;\theta_0)} \right) &\convP \bbE_{\theta_0}\left[ \log \left( \frac{f(X_1; \theta)}{f(X_1; \theta_0)} \right) \right] < 0. \label{eqn:convp}
 \end{align}
 To show the desired equation, it is equivalent to show, by \cref{eqn:rearrange},
-\begin{align}
+\begin{align*}
 \lim_{n\to\infty}P_{\theta_0}\left( \frac{1}{n}\sum_{i=1}^n\log\left( \frac{f(X_i;\theta)}{f(X_i;\theta_0)} \right) < 0 \right) = 1.
-\end{align}
+\end{align*}
 By \cref{eqn:convp}, we know that for all $\epsilon > 0$,
-\begin{align}
+\begin{align*}
 \lim_{n\to\infty}P_{\theta_0}\left( \left| \frac{1}{n}\sum_{i=1}^n\log\left( \frac{f(X_i;\theta)}{f(X_i;\theta_0)} \right) - \bbE_{\theta_0}\left[ \log \left( \frac{f(X_1; \theta)}{f(X_1; \theta_0)} \right) \right] \right| < \epsilon \right) = 1.
-\end{align}
+\end{align*}
 Again by rearranging the inequality inside, we get
 \begin{align}
 \bbE_{\theta_0}\left[ \log \left( \frac{f(X_1; \theta)}{f(X_1; \theta_0)} \right) \right] - \epsilon < \frac{1}{n}\sum_{i=1}^n\log\left( \frac{f(X_i;\theta)}{f(X_i;\theta_0)} \right) < \bbE_{\theta_0}\left[ \log \left( \frac{f(X_1; \theta)}{f(X_1; \theta_0)} \right) \right] + \epsilon. \label{eqn:long}
 \end{align}
 Note that the probability of event \cref{eqn:long} is less than or equal to that of
-\begin{align}
+\begin{align*}
 \frac{1}{n}\sum_{i=1}^n\log\left( \frac{f(X_i;\theta)}{f(X_i;\theta_0)} \right) < \bbE_{\theta_0}\left[ \log \left( \frac{f(X_1; \theta)}{f(X_1; \theta_0)} \right) \right] + \epsilon.
-\end{align}
+\end{align*}
 Since $\bbE_{\theta_0}\left[ \log \left( \frac{f(X_1; \theta)}{f(X_1; \theta_0)} \right) \right] < 0$, by fixing $\epsilon = -\bbE_{\theta_0}\left[ \log \left( \frac{f(X_1; \theta)}{f(X_1; \theta_0)} \right) \right] > 0$, we have
-\begin{align}
+\begin{align*}
 &\lim_{n\to\infty}P_{\theta_0}\left( \left| \frac{1}{n}\sum_{i=1}^n\log\left( \frac{f(X_i;\theta)}{f(X_i;\theta_0)} \right) - \bbE_{\theta_0}\left[ \log \left( \frac{f(X_1; \theta)}{f(X_1; \theta_0)} \right) \right] \right| < \epsilon \right)\\
 &\leq \lim_{n\to\infty}P_{\theta_0}\left( \frac{1}{n}\sum_{i=1}^n\log\left( \frac{f(X_i;\theta)}{f(X_i;\theta_0)} \right) < \bbE_{\theta_0}\left[ \log \left( \frac{f(X_1; \theta)}{f(X_1; \theta_0)} \right) \right] + \epsilon \right)\\
 &= \lim_{n\to\infty}P_{\theta_0}\left( \frac{1}{n}\sum_{i=1}^n\log\left( \frac{f(X_i;\theta)}{f(X_i;\theta_0)} \right) < 0 \right) = 1.
-\end{align}
+\end{align*}
 Therefore, we conclude that
-\begin{align}
+\begin{align*}
 \lim_{n\to\infty} P_{\theta_0}\left( L(\theta_0 \mid X) > L(\theta \mid X) \right) = 1, \forall \theta \neq \theta_0.
-\end{align}
+\end{align*}
 \end{proof}
 $ $\\
-\textbf{Lemma 2}: Under regularity conditions, 
+\begin{lemma} \label{lem:2}
+Under regularity conditions, with
 \begin{align}
+I(\theta) = \bbE_{\theta}\left[ \left( \frac{\partial}{\partial\theta}\log f(X;\theta) \right)^2 \right], \label{eqn:fisher}
+\end{align}
+we have
+\begin{align*}
 \bbE\left( \frac{\partial\log f(X;\theta)}{\partial \theta} \right) = 0, \text{ and }
 I(\theta) = -\bbE_\theta\left[ \frac{\partial^2\log f(X;\theta)}{\partial \theta^2} \right] = \var\left( \frac{\partial\log f(X;\theta)}{\partial \theta} \right).
-\end{align}
+\end{align*}
+\end{lemma}
 \begin{proof}
 We begin with differentiating both sides of $1 = \int_\bbR f(x;\theta) dx$.
 \begin{align}
-0 &= \frac{\partial}{\partial\theta}\int_\bbR f(x;\theta)dx\\
-&= \int_\bbR \frac{\partial}{\partial\theta} f(x;\theta)dx\\
-&= \int_\bbR \frac{\frac{\partial}{\partial\theta} f(x;\theta)}{f(x;\theta)}f(x;\theta) dx\\
+0 &= \frac{\partial}{\partial\theta}\int_\bbR f(x;\theta)dx\nonumber\\
+&= \int_\bbR \frac{\partial}{\partial\theta} f(x;\theta)dx\nonumber\\
+&= \int_\bbR \frac{\frac{\partial}{\partial\theta} f(x;\theta)}{f(x;\theta)}f(x;\theta) dx\nonumber\\
 &= \int_\bbR \frac{\partial \log f(x;\theta)}{\partial\theta}f(x;\theta) dx \label{eqn:trick_1} \\
-&= \bbE_\theta\left[ \frac{\partial \log f(x;\theta)}{\partial\theta} \right].
+&= \bbE_\theta\left[ \frac{\partial \log f(x;\theta)}{\partial\theta} \right]\nonumber.
 \end{align}
 Differentiating with respect to $\theta$ again, we get
 \begin{align}
-0 &= \frac{\partial}{\partial\theta}\int_\bbR \frac{\partial \log f(x;\theta)}{\partial\theta}f(x;\theta) dx\\
-&= \int_\bbR \frac{\partial^2 \log f(x;\theta)}{\partial\theta^2}f(x;\theta) dx + \int_\bbR \frac{\partial \log f(x;\theta)}{\partial\theta}\frac{\partial f(x;\theta)}{\partial\theta} dx\\
+0 &= \frac{\partial}{\partial\theta}\int_\bbR \frac{\partial \log f(x;\theta)}{\partial\theta}f(x;\theta) dx\nonumber\\
+&= \int_\bbR \frac{\partial^2 \log f(x;\theta)}{\partial\theta^2}f(x;\theta) dx + \int_\bbR \frac{\partial \log f(x;\theta)}{\partial\theta}\frac{\partial f(x;\theta)}{\partial\theta} dx\nonumber\\
 &= \int_\bbR \frac{\partial^2 \log f(x;\theta)}{\partial\theta^2}f(x;\theta) dx + \int_\bbR \frac{\partial \log f(x;\theta)}{\partial\theta}\frac{\partial \log f(x;\theta)}{\partial\theta}f(x;\theta) dx \label{eqn:trick_2} \\
-&= \bbE_\theta\left[ \frac{\partial^2 \log f(x;\theta)}{\partial\theta^2} \right] + \bbE_\theta\left[ \left(\frac{\partial \log f(x;\theta)}{\partial\theta}\right)^2 \right],
+&= \bbE_\theta\left[ \frac{\partial^2 \log f(x;\theta)}{\partial\theta^2} \right] + \bbE_\theta\left[ \left(\frac{\partial \log f(x;\theta)}{\partial\theta}\right)^2 \right],\nonumber
 \end{align}
 where \cref{eqn:trick_2} used the same trick as \cref{eqn:trick_1}. By \cref{eqn:fisher}, we have
-\begin{align}
+\begin{align*}
 I(\theta) = \bbE_\theta\left[ \left(\frac{\partial \log f(x;\theta)}{\partial\theta}\right)^2 \right] = -\bbE_\theta\left[ \frac{\partial^2 \log f(x;\theta)}{\partial\theta^2} \right].
-\end{align}
+\end{align*}
 Finally, since $\bbE_\theta\left[ \frac{\partial \log f(x;\theta)}{\partial\theta} \right] = 0$,
-\begin{align}
+\begin{align*}
 \var\left( \frac{\partial \log f(x;\theta)}{\partial\theta} \right) = \bbE_\theta\left[ \left(\frac{\partial \log f(x;\theta)}{\partial\theta}\right)^2 \right] - \left( \bbE_\theta\left[ \frac{\partial \log f(x;\theta)}{\partial\theta} \right] \right)^2 = I(\theta).
-\end{align}
+\end{align*}
 Together, we conclude that
-\begin{align}
+\begin{align*}
 \bbE\left( \frac{\partial\log f(X;\theta)}{\partial \theta} \right) = 0, \text{ and }
 I(\theta) = -\bbE_\theta\left[ \frac{\partial^2\log f(X;\theta)}{\partial \theta^2} \right] = \var\left( \frac{\partial\log f(X;\theta)}{\partial \theta} \right).
-\end{align}
+\end{align*}
 \end{proof}
 
 \subsection{Asymptotic Normality of MLE}
 We first establish the consistency of MLE.\\\\
-\textbf{Lemma 3}: Under regularity conditions, $\hat{\theta}$ is a consistent estimator of $\theta_0$.
+\begin{lemma}\label{lem:3}
+Under regularity conditions, $\hat{\theta}$ is a consistent estimator of $\theta_0$.
+\end{lemma}
 \begin{proof}
 We begin by showing that the equation $\frac{\partial l(\theta\mid x)}{\partial\theta}=0$ has a solution $\hat{\theta}_n$ that converges in probability to $\theta_0$.\\\\
 Since $\theta_0$ is an iterior point of $\Theta$, we can find $a>0$ such that $\theta_0 \in (\theta_0-a, \theta_0+a) \subset \Theta$. Then define the event
-\begin{align}
+\begin{align*}
 S_n = \left\{ x: l(\theta_0 \mid x) > l(\theta_0 - a \mid x) \cap l(\theta_0 \mid x) > l(\theta_0 + a \mid x) \right\}.
-\end{align}
-Lemma 1 says, under $P_{\theta_0}$, when $n$ approaches infinity, $\theta_0$ is the unique maximizer to $L(\theta\mid x)$, which implies that it is also the unique maximizer to $l(\theta\mid x)$. Then clearly $\lim_{n\to\infty}P_{\theta_0}(S_n) = 1$.\\\\
+\end{align*}
+\cref{lem:1} says, under $P_{\theta_0}$, when $n$ approaches infinity, $\theta_0$ is the unique maximizer to $L(\theta\mid x)$, which implies that it is also the unique maximizer to $l(\theta\mid x)$. Then clearly $\lim_{n\to\infty}P_{\theta_0}(S_n) = 1$.\\\\
 Note since $l(\theta_0\mid x) > l(\theta_0-a\mid x)$ and $l(\theta_0\mid x) > l(\theta_0+a\mid x)$, with $f(\theta; x)$ being continous and differentiable, there must exists, for any $x\in S_n$, a local maximum in $(\theta_0-a, \theta_0+a)$. Denote this value $\hat{\theta}_n$, then $\left.\frac{\partial l(\theta\mid x)}{\partial\theta}\right\vert_{\theta=\hat{\theta}_n}=0$.\\\\
 Then for all $a>0$ small enough, we can find a sequence of $\hat{\theta}$ such that
-\begin{align}
+\begin{align*}
 \lim_{n\to\infty}P_{\theta_0}\left( |\hat{\theta}_n - \theta_0| < a \right) = 1.
-\end{align}
+\end{align*}
 By choosing $\hat{\theta}_n$ to be the one closest to $\theta_0$, denoted $\theta^*_n$, we have identified a sequence $\left(\theta^*_n\right)_{n\geq1}$, independent of $a$, such that
-\begin{align}
+\begin{align*}
 \lim_{n\to\infty}P_{\theta_0}\left( |\hat{\theta}_n - \theta_0| < a \right) = 1, \forall a > 0.
-\end{align}
+\end{align*}
 This precisely means that $\hat{\theta}_n \convP \theta_0$.\\\\
 Now note that under regularity conditions, $\hat{\theta}_n$ is the unique solution to $\frac{\partial l(\theta\mid x)}{\partial\theta}=0$. Therefore, we conclude that $\hat{\theta}$ is a consistent estimator of $\theta_0$.
 \end{proof}
 $ $\\
 We now use this fact to prove the asymptotic normality of MLE.\\\\
 \textbf{Theorem 1}: Under regularity conditions, 
-\begin{align}
+\begin{align*}
 \sqrt{n}(\hat{\theta} - \theta) \convD \calN\left(0, \left[ I(\theta_0) \right]^{-1}\right),
-\end{align}
+\end{align*}
 where $I(\theta_0) = \bbE_{\theta_0}\left[ \left( \left.\frac{\partial \log f(X;\theta)}{\partial\theta}\right\vert_{\theta=\theta_0} \right)^2 \right]$.
 \begin{proof}
 By the Mean Value Theorem, for $f:\bbR \rightarrow \bbR$ continuous on $[a,b]$ and differentiable on $(a,b)$, for all $c\in(a,b)$,
-\begin{align}
+\begin{align*}
 \frac{f(a)-f(b)}{a-b} = f'(c).
-\end{align}
+\end{align*}
 Let $f(\theta) = l'(\theta) = \frac{\partial l(\theta)}{\partial \theta}, a=\hat{\theta}, b=\theta_0, c=\theta_1 \in (\theta_0, \hat{\theta})$. Then with $l''(\theta) = \frac{\partial^2 l(\theta)}{\partial \theta^2}$, the above equation becomes
-\begin{align}
+\begin{align*}
 \frac{l'(\hat{\theta}) - l'(\theta_0)}{\hat{\theta} - \theta_0} = l''(\theta_1).
-\end{align}
+\end{align*}
 We know $l'(\hat{\theta}) = 0$, then the equation above becomes
 \begin{align}
 0 = l'(\theta_0) + (\hat{\theta} - \theta_0)l''(\theta_1) \implies \sqrt{n}(\hat{\theta} - \theta_0) = -\frac{\sqrt{n}l'(\theta_0)}{l''(\theta_1)}. \label{eqn:frac}
 \end{align}
-We first look at the denominator of \cref{eqn:frac}. By Lemma 3, $\hat{\theta} \convP \theta_0$. Then since $\theta_1\in(\theta_0, \hat{\theta})$, we must have $\theta_1 \convP \theta_0$. Then by Proposition 10.7 from the lecture notes, 
-\begin{align}
+We first look at the denominator of \cref{eqn:frac}. By \cref{lem:3}, $\hat{\theta} \convP \theta_0$. Then since $\theta_1\in(\theta_0, \hat{\theta})$, we must have $\theta_1 \convP \theta_0$. Then by Proposition 10.7 from the lecture notes, 
+\begin{align*}
 l''(\theta_1) \convP l''(\theta_0).
-\end{align}
-Now by the Weak Law of Large Numbers and Lemma 2,
+\end{align*}
+Now by the Weak Law of Large Numbers and \cref{lem:2},
 \begin{align}
 l''(\theta_0) = \frac{1}{n}\sum_{i=1}^n \left.\frac{\partial^2}{\partial \theta^2}\log f(x_i; \theta)\right\vert_{\theta=\theta_0} \convP \bbE_{\theta_0}\left[ \left.\frac{\partial^2}{\partial \theta^2}\log f(X_1; \theta)\right\vert_{\theta=\theta_0} \right] = -I(\theta_0). \label{eqn:denom}
 \end{align}
-Now we look at the numerator of \cref{eqn:frac}. By Lemma 2, $\bbE_{\theta_0}\left[ \left.\frac{\partial}{\partial\theta}\log f(X_1;\theta)\right\vert_{\theta=\theta_0} \right] = 0$ and $I(\theta_0) = \var\left( \left.\frac{\partial}{\partial\theta}\log f(X_1;\theta)\right\vert_{\theta=\theta_0} \right)$. Then by the Central Limit Theorem,
+Now we look at the numerator of \cref{eqn:frac}. By \cref{lem:2}, $\bbE_{\theta_0}\left[ \left.\frac{\partial}{\partial\theta}\log f(X_1;\theta)\right\vert_{\theta=\theta_0} \right] = 0$ and $I(\theta_0) = \var\left( \left.\frac{\partial}{\partial\theta}\log f(X_1;\theta)\right\vert_{\theta=\theta_0} \right)$. Then by the Central Limit Theorem,
 \begin{align}
-\sqrt{n}l'(\theta_0) &= \sqrt{n}\frac{1}{n}\sum_{i=1}^n \left.\frac{\partial}{\partial\theta}\log f(x_i;\theta)\right\vert_{\theta=\theta_0}\\
-&= \sqrt{n}\left( \frac{1}{n}\sum_{i=1}^n \left.\frac{\partial}{\partial\theta}\log f(x_i;\theta)\right\vert_{\theta=\theta_0} - \bbE_{\theta_0}\left[ \left.\frac{\partial}{\partial\theta}\log f(X_1;\theta)\right\vert_{\theta=\theta_0} \right] \right)\\
-&\convD \calN\left(0, \var\left( \left.\frac{\partial}{\partial\theta}\log f(X_1;\theta)\right\vert_{\theta=\theta_0} \right)\right)\\
+\sqrt{n}l'(\theta_0) &= \sqrt{n}\frac{1}{n}\sum_{i=1}^n \left.\frac{\partial}{\partial\theta}\log f(x_i;\theta)\right\vert_{\theta=\theta_0}\nonumber\\
+&= \sqrt{n}\left( \frac{1}{n}\sum_{i=1}^n \left.\frac{\partial}{\partial\theta}\log f(x_i;\theta)\right\vert_{\theta=\theta_0} - \bbE_{\theta_0}\left[ \left.\frac{\partial}{\partial\theta}\log f(X_1;\theta)\right\vert_{\theta=\theta_0} \right] \right)\nonumber\\
+&\convD \calN\left(0, \var\left( \left.\frac{\partial}{\partial\theta}\log f(X_1;\theta)\right\vert_{\theta=\theta_0} \right)\right)\nonumber\\
 &= \calN\left( 0, I(\theta_0) \right). \label{eqn:numerator}
 \end{align}
 Together by \cref{eqn:frac,eqn:denom,eqn:numerator} and Slutsky's Theorem,
-\begin{align}
+\begin{align*}
 \sqrt{n}(\hat{\theta} - \theta_0) = -\frac{\sqrt{n}l'(\theta_0)}{l''(\theta_1)} \convD \frac{\calN\left(0,I(\theta_0)\right)}{I(\theta_0)} = \calN\left(0, \left[ I(\theta_0) \right]^{-1}\right).
-\end{align}
+\end{align*}
 Therefore we conclude that $\sqrt{n}(\hat{\theta} - \theta_0)\convD\calN\left(0, \left[ I(\theta_0) \right]^{-1}\right)$.
 \end{proof}
 $ $\\
@@ -196,33 +174,33 @@ Out of all possible estimators for $\theta_0$, how good is the MLE? The next res
 \textbf{Theorem 2}: Let $Y = u(X_1,\cdots,X_n)$ be an unbiased estimator of $\theta_0$ such that $\bbE_{\theta_0}[Y] = \theta_0$. Then under regularity conditions, $\var(Y) \geq \frac{1}{nI(\theta_0)}$.
 \begin{proof}
 We first expand $E_{\theta_0}[Y]$.
-\begin{align}
+\begin{align*}
 \theta_0 = E_{\theta_0}[Y] = \int_\bbR\cdots\int_\bbR u(x_1,\cdots,x_n)\prod_{i=1}^nf(x_i;\theta_0)dx_1\cdots dx_n.
-\end{align}
+\end{align*}
 Differentiating both sides with respect to $\theta_0$ gives
-\begin{align}
+\begin{align*}
 1 &= \int_\bbR\cdots\int_\bbR u(x_1,\cdots,x_n) \left(\sum_{i=1}^n \frac{\partial f(x_i;\theta_0)}{\partial\theta_0} \frac{1}{f(x_i;\theta_0)}\right) \prod_{i=1}^nf(x_i;\theta_0)dx_1\cdots dx_n\\
 &= \int_\bbR\cdots\int_\bbR u(x_1,\cdots,x_n) \left(\sum_{i=1}^n \frac{\partial \log f(x_i;\theta_0)}{\partial\theta_0} \right) \prod_{i=1}^nf(x_i;\theta_0)dx_1\cdots dx_n
-\end{align}
+\end{align*}
 By writing $Z = \sum_{i=1}^n \frac{\partial \log f(X_i;\theta_0)}{\partial\theta_0}$, we get, with $\rho$ denoting the correlation coefficient between $Y$ and $Z$,
-\begin{align}
+\begin{align*}
 1 = \bbE_{\theta_0}[YZ] = \bbE_{\theta_0}[Y]\bbE_{\theta_0}[Z] + \rho\sqrt{\var(Y)}\sqrt{\var(Z)} \implies \rho = \frac{1}{\sqrt{\var(Y)}\sqrt{\var(Z)}}.
-\end{align}
+\end{align*}
 We note that since $X_i$'s are \iid,
-\begin{align}
+\begin{align*}
 \var(Z) &= \var\left( \sum_{i=1}^n \frac{\partial \log f(X_i;\theta_0)}{\partial\theta_0} \right)\\
 &= \sum_{i=1}^n \var\left(\frac{\partial \log f(X_i;\theta_0)}{\partial\theta_0}\right)\\
 &= n\var\left(\frac{\partial \log f(X_1;\theta_0)}{\partial\theta_0}\right)\\
 &= nI(\theta_0).
-\end{align}
+\end{align*}
 Then
-\begin{align}
+\begin{align*}
 \rho = \frac{1}{\sqrt{nI(\theta_0)}\sqrt{\var(Y)}}.
-\end{align}
+\end{align*}
 By definition, $rho^2 \leq 1$, then
-\begin{align}
+\begin{align*}
 \rho^2 = \frac{1}{nI(\theta_0)\var(Y)} \leq 1 \implies \var(Y) \geq \frac{1}{nI(\theta_0)}.
-\end{align}
+\end{align*}
 Therefore for any unbiased estimator $Y$ of $\theta_0$, we have $\var(Y) \geq \frac{1}{nI(\theta_0)}$.
 \end{proof}
 $ $\\
@@ -231,28 +209,28 @@ Note the lower bound on the variance is exactly the asymptotic variance of $\hat
 
 %\begin{proof}
 %By dropping the condition that $\theta\neq\theta_0$, Lemma 1 states that
-%\begin{align}
+%\begin{align*}
 %\lim_{n\to\infty}P_{\theta_0}\left( L(\theta_0 \mid X) \geq L(\theta \mid X) \right) = 1. \label{eqn:geq}
-%\end{align}
+%\end{align*}
 %And by definition of $\hat{\theta}_n$, \bred (explain n and X) \ered,
-%\begin{align}
+%\begin{align*}
 %L(\hat{\theta}_n \mid X) \geq L(\theta_0 \mid X), \forall X. \label{eqn:leq}
-%\end{align}
+%\end{align*}
 %By letting $\theta = \hat{\theta}_n$ for each $n$, we have by \cref{eqn:leq},
-%\begin{align}
+%\begin{align*}
 %\lim_{n\to\infty}P_{\theta_0}\left( L(\theta_0 \mid X) \leq L(\hat{\theta}_n \mid X) \right) = 1,
-%\end{align}
+%\end{align*}
 %and by \cref{eqn:geq},
-%\begin{align}
+%\begin{align*}
 %\lim_{n\to\infty}P_{\theta_0}\left( L(\theta_0 \mid X) \geq L(\hat{\theta}_n \mid X) \right) = 1.
-%\end{align}
+%\end{align*}
 %Together, 
-%\begin{align}
+%\begin{align*}
 %\lim_{n\to\infty}P_{\theta_0}\left( L(\theta_0 \mid X) = L(\hat{\theta}_n \mid X) \right) = 1. \label{eqn:equal}
-%\end{align}
+%\end{align*}
 %Lemma 1 implies $\theta_0$ is the unique maximizer of $L(\theta|X)$ under $P_{\theta_0}$ as $n$ approaches infinity, so \cref{eqn:equal} implies 
-%\begin{align}
+%\begin{align*}
 %\lim_{n\to\infty}P_{\theta_0}(\theta_0 = \hat{\theta}_n) = 1 \implies \lim_{n\to\infty}P_{\theta_0}\left( \left| \hat{\theta}_n - \theta_0 \right| > \epsilon \right) = 0, \forall \epsilon > 0.
-%\end{align}
+%\end{align*}
 %We then have that $\hat{\theta}$ is a consistent estimator of $\theta_0$.
 %\end{proof}

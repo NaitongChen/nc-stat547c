@@ -3,7 +3,28 @@
 % Background section
 
 \section{Background}
-
-
-
+Maximum likelihood estimation, as a dominant player in statistical inference, is a simple and intuitive method of parameter estimation. Given a set of \iid observations, maximum likelihood estimation finds the value, denoted maximum likelihood estimate, that maximizes the likelihood function that describes the observations at hand. Due to the simple and intuitive nature of maximum likelihood estimation, it can be found in many different applications: from simple regression analysis to imputing missing values in a given dataset. Besides the fact that maximum likelihood estimation can be easily and intuitively applied to different problems, there are many other properties that make maximum likelihood estimation applealing.\\\\
+In this report, we focus on one of these nice properties, namely the \emph{asymptotic normality of maximum likelihood estimators} (MLE). Specifically, as the sample size approaches infinity, the MLE converges in distribution to a normal distribution centred at the true value of the parameter. This property are significant in that it justifies the behaviour of such estimators with theoretical rigour. The fact that, given a sufficiently large sample, some arbitrary MLE approximately follows the well-studied normal distirbution centred at the (unknown) true parameter value unifies how we can interpret this large class of estimators and how we can apply them to solving other problems. One of the immediate applications of this result is that we can quantify uncertainties of the MLEs.\\\\
+While asymptotic normality is nice to have, a natural question to ask then is how accurate the MLEs are compared to other estimators. It turns out that, for an unbiased estimator, the lowest variance that it can possibly achieve is precisely the asymptotic variance of the MLE. This is formalized as the \emph{Cramer-Rao lowerbound}. This lowerbound on the variance of unbiased estimators tells us that, asymptotically, the MLE is the best we can do in terms of achieving minimal variance.\\\\
+However, this is still an asymptotic result. In practice, we only work with finitely many observations at a time, and so even with a sufficiently large sample size, the asymptotic normality can only give us approximate results, which is unsatisfying. Besides, there is no clear cut as in what is considered a sufficiently large sample. Fortunately, some work has been done in \cite{anastasiou2015bounds}, which bounds the distance between an MLE obtained from finitely many observations and its asymptotic normal distribution.\\\\
+In this report, we develop proofs for both the \emph{asymptotic normality of MLEs} and the \emph{Cramer-Rao lowerbound}, and follow up with a discussion on the work done in \cite{anastasiou2015bounds}, as well as its potential extensions and applications. Before diving into the proofs, we set up notations and assumptions that will be used throughout the rest of the report.
+\subsection{Notations and Assumptions}
+For simplicity, we focus on the case where the obsevations are continous and there is one continous parameter to be estimated. Specifically, let $X_1,\cdots,X_n$ be \iid continuous random variables in $\bbR$ with probability density function $f(x;\theta)$, where $\theta \in \Theta$ is a unknown parameter. Denote the likelihood function and log-likelihood function
+\begin{align*}
+L(\theta) = \prod_{i=1}^n f(x_i;\theta), && l(\theta) = \sum_{i=1}^n \log f(x_i;\theta).
+\end{align*}
+Then the maximum likelihood estimator can be obtained by
+\begin{align*}
+\hat{\theta} = \argmax_{\theta\in\Theta}l(\theta) = \argmax_{\theta\in\Theta}L(\theta).
+\end{align*}
+In addition we use $\bbE_{\theta}$ and $P_{\theta}$ to denote expectation and probability with respect to $f(\cdot;\theta)$.\\\\
+Throughout the report, we assume the following regularity conditions.
+\begin{itemize}
+\item (R1) $f(x;\theta)$ is identifiable: $\theta_1\neq\theta_2\implies f(x;\theta_1)\neq f(x;\theta_2)$.
+\item (R2) $f(x;\theta)$ has common support for all $\theta\in\Theta$.
+\item (R3) $\theta_0$ is an iterior point in $\Theta$.
+\item (R4) $f(x;\theta)$ is twice differentiable in $\theta$.
+\item (R5) The integral $\int f(x;\theta)$ can be different twice in $\theta$ under the integral sign.
+\item (R6) $\hat{\theta}$ is the unique solution to $\frac{\partial l(\theta)}{\theta} = 0$.
+\end{itemize}
 % ...
