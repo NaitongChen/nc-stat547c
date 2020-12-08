@@ -6,23 +6,23 @@ The proofs for both the \emph{asymptotic normality of MLE} and the \emph{Cramer-
 \subsection{Score Function and Fisher Information}
 To begin, we define two functions of the derivative of the log-likelihood function. The \emph{score function} $\frac{\partial\log f(x;\theta)}{\partial\theta}$ is defined to be the derivative of the log-likelihood function of a single observation. And the \emph{Fisher information} is defined as
 \begin{align}
-I(\theta) = \bbE_{\theta}\left[ \left( \frac{\partial}{\partial\theta}\log f(X;\theta) \right)^2 \right]. \label{eqn:fisher}
+I(\theta) = \bbE_{\theta}\left[ \left( \frac{\partial}{\partial\theta}\log f(X_1;\theta) \right)^2 \right]. \label{eqn:fisher}
 \end{align}
 These two quantities repeatedly come up in the proofs of both the \emph{asymptotic normality of MLE} and the \emph{Cramer-Rao lowerbound}. Using (R4) and (R5) from the regularity conditions, we can show the following properties of the score function and Fisher information through some simple algebraic manipulations.
 \begin{lemma} \label{lem:2}
 Under regularity conditions and using the notations set up in \cref{sec:notation}, we have
 \begin{align*}
-\bbE_\theta\left( \frac{\partial\log f(X;\theta)}{\partial \theta} \right) = 0, \text{ and }
-I(\theta) = -\bbE_\theta\left[ \frac{\partial^2\log f(X;\theta)}{\partial \theta^2} \right] = \var_\theta\left( \frac{\partial\log f(X;\theta)}{\partial \theta} \right).
+\bbE_\theta\left( \frac{\partial\log f(X_1;\theta)}{\partial \theta} \right) = 0, \text{ and }
+I(\theta) = -\bbE_\theta\left[ \frac{\partial^2\log f(X_1;\theta)}{\partial \theta^2} \right] = \var_\theta\left( \frac{\partial\log f(X_1;\theta)}{\partial \theta} \right).
 \end{align*}
 \end{lemma}
 \begin{proof}
 We begin with differentiating both sides of $1 = \int_\bbR f(x;\theta) dx$.
 \begin{align}
-0 &= \int_\bbR \frac{\partial}{\partial\theta} f(x;\theta)dx\nonumber\\
-&= \int_\bbR \frac{\frac{\partial}{\partial\theta} f(x;\theta)}{f(x;\theta)}f(x;\theta) dx\nonumber\\
-&= \int_\bbR \frac{\partial \log f(x;\theta)}{\partial\theta}f(x;\theta) dx \label{eqn:trick_1} \\
-&= \bbE_\theta\left[ \frac{\partial \log f(x;\theta)}{\partial\theta} \right]\nonumber.
+0 = \int_\bbR \frac{\partial}{\partial\theta} f(x;\theta)dx
+= \int_\bbR \frac{\frac{\partial}{\partial\theta} f(x;\theta)}{f(x;\theta)}f(x;\theta) dx
+= \int_\bbR \frac{\partial \log f(x;\theta)}{\partial\theta}f(x;\theta) dx 
+= \bbE_\theta\left[ \frac{\partial \log f(x;\theta)}{\partial\theta} \right]. \label{eqn:trick_1}
 \end{align}
 Differentiating with respect to $\theta$ again, we get
 \begin{align}
@@ -41,16 +41,16 @@ Finally, since $\bbE_\theta\left[ \frac{\partial \log f(x;\theta)}{\partial\thet
 \end{align*}
 Together, we conclude that
 \begin{align*}
-\bbE_\theta\left( \frac{\partial\log f(X;\theta)}{\partial \theta} \right) = 0, \text{ and }
-I(\theta) = -\bbE_\theta\left[ \frac{\partial^2\log f(X;\theta)}{\partial \theta^2} \right] = \var_\theta\left( \frac{\partial\log f(X;\theta)}{\partial \theta} \right).
+\bbE_\theta\left( \frac{\partial\log f(X_1;\theta)}{\partial \theta} \right) = 0, \text{ and }
+I(\theta) = -\bbE_\theta\left[ \frac{\partial^2\log f(X_1;\theta)}{\partial \theta^2} \right] = \var_\theta\left( \frac{\partial\log f(X_1;\theta)}{\partial \theta} \right).
 \end{align*}
 \end{proof}
 $ $\\
 Here we offer one way of interpreting the Fisher information. By (R6) from the regularity conditions, $\hat{\theta}$ is a stationary point of the log-likelihood function. Plugging $\hat{\theta}$ to the Fisher information, we get
 \begin{align*}
-I(\hat{\theta}) = -\bbE_{\hat{\theta}}\left[ \left.\frac{\partial^2\log f(X;\theta)}{\partial \theta^2}\right\vert_{\theta=\hat{\theta}} \right] = \var_{\hat{\theta}}\left( \left.\frac{\partial\log f(X;\theta)}{\partial \theta}\right\vert_{\theta=\hat{\theta}} \right).
+I(\hat{\theta}) = -\bbE_{\hat{\theta}}\left[ \left.\frac{\partial^2\log f(X_1;\theta)}{\partial \theta^2}\right\vert_{\theta=\hat{\theta}} \right] = \var_{\hat{\theta}}\left( \left.\frac{\partial\log f(X_1;\theta)}{\partial \theta}\right\vert_{\theta=\hat{\theta}} \right).
 \end{align*}
-The first equality says that the Fisher information measures the curvature of the log-likelihood function around the maximum likelihood estimate. Particularly, a large value is associated with a sharp peak around the maximum likelihood estimate, which means that the estimate is very sensitive to changes in the data $X$. Similarly, a small value is associated with a blunt peak around the maximum likelihood estimate, which means that the estimate does not fluctuate much with small changes in the data $X$. This lines up well with the second equality which tells us that the Fisher information at $\hat{\theta}$ measures the variance of the score function at that point.
+The first equality says that the Fisher information measures the curvature of the log-likelihood function around the maximum likelihood estimate. Particularly, a large value is associated with a sharp peak around the maximum likelihood estimate, which means that the estimate is very sensitive to changes in the data $\bm{X}$. Similarly, a small value is associated with a blunt peak around the maximum likelihood estimate, which means that the estimate does not fluctuate much with small changes in the data $\bm{X}$. This lines up well with the second equality which tells us that the Fisher information at $\hat{\theta}$ measures the variance of the score function at that point.
 \subsection{Asymptotic Normality of MLE}
 Having established some properties on the score function and the Fisher information, we devote this section to developing the first main result.
 \begin{theorem} \label{thm:1}
@@ -58,7 +58,7 @@ Under regularity conditions and following the notations set up in \cref{sec:nota
 \begin{align*}
 \sqrt{n}(\hat{\theta} - \theta) \convD \calN\left(0, \left[ I(\theta_0) \right]^{-1}\right),
 \end{align*}
-where $I(\theta_0) = \bbE_{\theta_0}\left[ \left( \left.\frac{\partial \log f(X;\theta)}{\partial\theta}\right\vert_{\theta=\theta_0} \right)^2 \right]$.
+where $I(\theta_0) = \bbE_{\theta_0}\left[ \left( \left.\frac{\partial \log f(X_1;\theta)}{\partial\theta}\right\vert_{\theta=\theta_0} \right)^2 \right]$.
 \end{theorem}
 $ $\\
 The overall structure of the proof is relatively straightforward. First the mean value theorem is applied to obtain an expression of $\sqrt{n}(\hat{\theta} - \theta_0)$ using a fraction of derivatives of the log-likelihood function $l(\theta)$. The asymptotic properties of the fraction's numerator and denominator are analyzed separately, before being put together to finally get the desired result. However, when studying the asymptotic properties of the fraction, we need to invoke the consistency of MLEs under regularity conditions, which in some sense is more intricate than the proof of \cref{thm:1} itself. We therefore begin with a lemma which will be used to prove the consistency of MLEs. Note that to make clear the dependence of the likelihood functions on the data, we write this dependence explicitly in the lemma below. Let $\bm{X}$ represent the set of all \iid $X_1,\cdots,X_n$.
@@ -121,41 +121,33 @@ Therefore, we conclude that
 $ $\\
 The key step in the above proof is obtaining \cref{eqn:convp} using Jensen's inequality and the weak law of large numbers. The desired result can then be obtained by manipulating the definition of convergence in probability in \cref{eqn:convp}. Note \cref{eqn:regularity} in the above proof requires the use of (R2) from the regularity conditions.\\\\
 The above lemma says that $\theta_0$ maximizes $L(\theta)$, and therefore $l(\theta)$ as $n$ approaches infinity, under $P_{\theta_0}$. By (R1) of the regularity conditions, it is easy to see that $\theta_0$ is the unique maximizer of $L(\theta)$ and $l(\theta)$ as $n$ approaches infinity, under $P_{\theta_0}$. On the other hand, by (R6) of the regularity conditions, $\hat{\theta}$ uniquely maximizes $l(\theta)$ for all finite $n$. Together with the fact that $\theta_0$ uniquely maximizes $l(\theta)$ in probability, it makes intuitive sense to draw the conclusion that $\lim_{n\to\infty}P_{\theta_0}\left(| \hat{\theta} - \theta_0 | < \epsilon \right) = 1$, which precisely means that $\hat{\theta}$ is a consistent estimator of $\theta_0$.\\\\
-The next lemma formalizes this statement. Instead of proving the result directly, using (R3) from the regularity conditions, an arbitrary sequence of solutions $\left(\hat{\theta}_n\right)_{n\geq1}$ to $\frac{\partial l(\theta\mid \bm{X})}{\partial\theta}=0$ are first found. Then by (R6) from the regularity conditions, we identify that $\left(\hat{\theta}_n\right)_{n\geq1}$ are indeed the sequence of MLEs. The key observation in the proof below is the existence of a local maximum in the neighbourhood of $\theta_0$.
+The next lemma formalizes this statement. Instead of proving the result directly, using (R3) from the regularity conditions, an arbitrary sequence of solutions $\left(\bar{\theta}_n\right)_{n\geq1}$ to $\frac{\partial l(\theta\mid \bm{X})}{\partial\theta}=0$ are first found. Then by (R6) from the regularity conditions, we identify that $\left(\bar{\theta}_n\right)_{n\geq1}$ are indeed the sequence of MLEs. The key observation in the proof below is the existence of a local maximum in the neighbourhood of $\theta_0$.
 \begin{lemma}\label{lem:3}
 Under regularity conditions and following the notations set up in \cref{sec:notation}, $\hat{\theta}$ is a consistent estimator of $\theta_0$.
 \end{lemma}
 \begin{proof}
-We begin by showing that the equation $\frac{\partial l(\theta\mid \bm{X})}{\partial\theta}=0$ has a solution $\hat{\theta}_n$ that converges in probability to $\theta_0$.\\\\
+We begin by showing that the equation $\frac{\partial l(\theta\mid \bm{X})}{\partial\theta}=0$ has a solution $\bar{\theta}_n$ that converges in probability to $\theta_0$.\\\\
 Since $\theta_0$ is an iterior point of $\Theta$, we can find $a>0$ such that $\theta_0 \in (\theta_0-a, \theta_0+a) \subset \Theta$. Then define the event
 \begin{align*}
 S_n = \left\{ \bm{X}: l(\theta_0 \mid \bm{X}) > l(\theta_0 - a \mid \bm{X}) \cap l(\theta_0 \mid \bm{X}) > l(\theta_0 + a \mid \bm{X}) \right\}.
 \end{align*}
 \cref{lem:1} says, under $P_{\theta_0}$, when $n$ approaches infinity, $\theta_0$ is the unique maximizer to $L(\theta\mid \bm{X})$, which implies that it is also the unique maximizer to $l(\theta\mid \bm{X})$. Then clearly $\lim_{n\to\infty}P_{\theta_0}(S_n) = 1$.\\\\
-Note since $l(\theta_0\mid \bm{X}) > l(\theta_0-a\mid \bm{X})$ and $l(\theta_0\mid \bm{X}) > l(\theta_0+a\mid \bm{X})$, with $f(\theta; \bm{X})$ being continous and differentiable, there must exists, for any $\bm{X}\in S_n$, a local maximum in $(\theta_0-a, \theta_0+a)$. Denote this value $\hat{\theta}_n$, then $\left.\frac{\partial l(\theta\mid \bm{X})}{\partial\theta}\right\vert_{\theta=\hat{\theta}_n}=0$.\\\\
+Note since $l(\theta_0\mid \bm{X}) > l(\theta_0-a\mid \bm{X})$ and $l(\theta_0\mid \bm{X}) > l(\theta_0+a\mid \bm{X})$, with $f(\theta; \bm{X})$ being continous and differentiable, there must exists, for any $\bm{X}\in S_n$, a local maximum in $(\theta_0-a, \theta_0+a)$. Denote this value $\bar{\theta}_n$, then $\left.\frac{\partial l(\theta\mid \bm{X})}{\partial\theta}\right\vert_{\theta=\bar{\theta}_n}=0$.\\\\
 Then for all $a>0$ small enough, we can find a sequence of $\hat{\theta}$ such that
 \begin{align*}
-\lim_{n\to\infty}P_{\theta_0}\left( |\hat{\theta}_n - \theta_0| < a \right) = 1.
+\lim_{n\to\infty}P_{\theta_0}\left( |\bar{\theta}_n - \theta_0| < a \right) = 1.
 \end{align*}
-By choosing $\hat{\theta}_n$ to be the one closest to $\theta_0$, denoted $\theta^*_n$, we have identified a sequence $\left(\theta^*_n\right)_{n\geq1}$, independent of $a$, such that
+By choosing $\bar{\theta}_n$ to be the one closest to $\theta_0$, denoted $\theta^*_n$, we have identified a sequence $\left(\theta^*_n\right)_{n\geq1}$, independent of $a$, such that
 \begin{align*}
-\lim_{n\to\infty}P_{\theta_0}\left( |\hat{\theta}_n - \theta_0| < a \right) = 1, \forall a > 0.
+\lim_{n\to\infty}P_{\theta_0}\left( |\theta^*_n - \theta_0| < a \right) = 1, \forall a > 0.
 \end{align*}
-This precisely means that $\hat{\theta}_n \convP \theta_0$.\\\\
-Now note that under regularity conditions, $\hat{\theta}_n$ is the unique solution to $\frac{\partial l(\theta\mid \bm{X})}{\partial\theta}=0$. Therefore, we conclude that $\hat{\theta}$ is a consistent estimator of $\theta_0$.
+This precisely means that $\theta*_n \convP \theta_0$.\\\\
+Now note that under regularity conditions, $\hat{\theta}$ is the unique solution to $\frac{\partial l(\theta\mid \bm{X})}{\partial\theta}=0$. Therefore, we conclude that $\hat{\theta}$ is a consistent estimator of $\theta_0$.
 \end{proof}
 $ $\\
 Now that we have established the consistency of MLEs, we are equipped with all of the necessary tools to prove \cref{thm:1}.
 \begin{proof}
-By the mean value theorem, for $f:\bbR \rightarrow \bbR$ continuous on $[a,b]$ and differentiable on $(a,b)$, for all $c\in(a,b)$,
-\begin{align*}
-\frac{f(a)-f(b)}{a-b} = f'(c).
-\end{align*}
-Let $f(\theta) = l'(\theta) = \frac{\partial l(\theta)}{\partial \theta}, a=\hat{\theta}, b=\theta_0, c=\theta_1 \in (\theta_0, \hat{\theta})$. Then with $l''(\theta) = \frac{\partial^2 l(\theta)}{\partial \theta^2}$, the above equation becomes
-\begin{align*}
-\frac{l'(\hat{\theta}) - l'(\theta_0)}{\hat{\theta} - \theta_0} = l''(\theta_1).
-\end{align*}
-We know $l'(\hat{\theta}) = 0$, then the equation above becomes
+By the mean value theorem, for $f:\bbR \rightarrow \bbR$ continuous on $[a,b]$ and differentiable on $(a,b)$, for all $c\in(a,b), \frac{f(a)-f(b)}{a-b} = f'(c)$. Let $f(\theta) = l'(\theta) = \frac{\partial l(\theta)}{\partial \theta}, a=\hat{\theta}, b=\theta_0, c=\theta_1 \in (\theta_0, \hat{\theta})$. Then with $l''(\theta) = \frac{\partial^2 l(\theta)}{\partial \theta^2}$, the above equation becomes $\frac{l'(\hat{\theta}) - l'(\theta_0)}{\hat{\theta} - \theta_0} = l''(\theta_1)$. We know $l'(\hat{\theta}) = 0$, then the equation above becomes
 \begin{align}
 0 = l'(\theta_0) + (\hat{\theta} - \theta_0)l''(\theta_1) \implies \sqrt{n}(\hat{\theta} - \theta_0) = -\frac{\sqrt{n}l'(\theta_0)}{l''(\theta_1)}. \label{eqn:frac}
 \end{align}
@@ -183,25 +175,25 @@ Therefore we conclude that $\sqrt{n}(\hat{\theta} - \theta_0)\convD\calN\left(0,
 Following the outline of the proof's structure at the beginning of the subsection, the proof above should be relatively easy to follow. Again, the mean value theorem is first applied to obtain a fraction as an expression for $\sqrt{n}(\hat{\theta} - \theta_0)$. Using results from \cref{lem:2,lem:3}, together with the weak law of large numbers, central limit theorem (both introduced in class) and Slutsky's theorem (proof shown in Appendix), we obtain the final convergence result. Note that the use of consistency of MLE is to show that $l''(\theta_1)$ converges in probability to $-I(\theta_0)$.\\\\
 Using our previously developed interpretation on the Fisher information, we get that, when the MLE is sensitive to changes in the data, we get a large Fisher information, which implies by \cref{thm:1} that the estimator has a small asymptotic variance. This again aligns with our intuition. Particularly, a large Fisher information implies that the curvature around the maximum of the log-likelihood function is sharp, which implies that there is less uncertainty around the estimator of $\theta_0$.\\\\
 Instead of the mean value theorem, some versions of the above proof start with a Taylor expansion of $l'(\theta)$ at $\theta_0$, where consistency of MLE is used to show that the higher order terms are bounded in probability. While they may be theoretically more rigorous, they are less straightforward and harder to follow. Therefore, we have chosen the above version of the proof to be presented.\\\\
-We now verify \cref{thm:1} through some simulations. From \cref{thm:1}, we have that $\hat{\theta}\convD \calN(\theta_0, \left[nI(\theta_0)\right]^{-1})$. We generate $1000$ trials of $n=10,40,70,100$ \iid observations from Gamma$(\alpha=2,\theta=2)$, using the shape and scale parameterization. Simple calculation yields $\hat{\theta} = \frac{1}{\bar{x}}$, and $I(\theta_0) = \frac{1}{\theta_0^2}$. The histograms of the MLEs of $\hat{\theta}$ given $\alpha$ are plotted for each sample size, which is compared to their asymptotic distribution, shown as red curves in the histogram (\cref{hist}). The code can be found in the \texttt{src} folder in the repository. \texttt{RStudio 1.3.959} is used to generate the plots below. It is worth noting that as the sample size increases, the variance of the MLE decreases, which aligns with \cref{thm:1}.\\\\
+We now verify \cref{thm:1} through some simulations. From \cref{thm:1}, we have that $\hat{\theta}\convD \calN(\theta_0, \left[nI(\theta_0)\right]^{-1})$. We generate $1000$ trials of $n=10,40,70,100$ \iid observations from Gamma$(\alpha=2,\theta=2)$, using the shape and scale parameterization. Simple calculation yields $\hat{\theta} = \frac{1}{\bar{x}}$, and $I(\theta_0) = \frac{1}{\theta_0^2}$. The histograms of the MLEs of $\hat{\theta}$ given $\alpha$ are plotted for each sample size, which is compared to their asymptotic distribution, shown as red curves in the histogram (\cref{hist}). The code can be found at \texttt{src/simulation\_normality.R}. \texttt{RStudio 1.3.959} is used to generate the plots below. It is worth noting that as the sample size increases, the variance of the MLE decreases, which aligns with \cref{thm:1}.\\\\
 The \emph{asymptotic normality of MLEs} enables us to study the estimators more closely. As mentioned before, one of the immediate applications is that we can quantify the uncertainties around the MLEs. For examle, we can construct approximate confidence intervals of the unknown parameters using the fact that the MLEs are asymptotically normal.
 \begin{figure}[h]
     \centering
     \begin{subfigure}
         \centering
-        \includegraphics[scale=0.6]{../../../misc/N10.jpg}
+        \includegraphics[scale=0.45]{../../../misc/N10.jpg}
     \end{subfigure}
     \begin{subfigure}
         \centering
-        \includegraphics[scale=0.6]{../../../misc/N40.jpg}
+        \includegraphics[scale=0.45]{../../../misc/N40.jpg}
     \end{subfigure}\\
     \begin{subfigure}
         \centering
-        \includegraphics[scale=0.6]{../../../misc/N70.jpg}
+        \includegraphics[scale=0.45]{../../../misc/N70.jpg}
     \end{subfigure}
     \begin{subfigure}
         \centering
-        \includegraphics[scale=0.6]{../../../misc/N100.jpg}
+        \includegraphics[scale=0.45]{../../../misc/N100.jpg}
     \end{subfigure}
 	\caption{Histograms of MLEs of varying sample sizes}
 	\label{hist}
@@ -232,11 +224,7 @@ We note that since $X_i$'s are \iid,
 = n\var\left(\frac{\partial \log f(X_1;\theta_0)}{\partial\theta_0}\right)
 = nI(\theta_0).
 \end{align*}
-Then
-\begin{align*}
-\rho = \frac{1}{\sqrt{nI(\theta_0)}\sqrt{\var(Y)}}.
-\end{align*}
-By definition, $rho^2 \leq 1$, then
+Then $\rho = \frac{1}{\sqrt{nI(\theta_0)}\sqrt{\var(Y)}}$. By definition, $rho^2 \leq 1$, then
 \begin{align*}
 \rho^2 = \frac{1}{nI(\theta_0)\var(Y)} \leq 1 \implies \var(Y) \geq \frac{1}{nI(\theta_0)}.
 \end{align*}
@@ -244,5 +232,5 @@ Therefore for any unbiased estimator $Y$ of $\theta_0$, we have $\var(Y) \geq \f
 \end{proof}
 $ $\\
 The proof itself is relatively straightforward, where we essentially reach the desired conclusion by using (R5) of the regularity conditions and simple algebraic manipulations. It is, however, the implication of this result that is worth looking at. Note the lower bound on the variance is exactly the asymptotic variance of MLEs. This means that asymptotically, the MLE achieves the smallest possible variance out of all unbiased estimators of $\theta$. Therefore the MLEs are said to be \emph{asymptotically efficient}.\\\\
-While this is a nice property, it remains rather theoretical. In practice, when we work with finitely many observations, it is not clear how far away we are from the asymptotic normality. And existing heuristics from undergraduate statistics courses such as calling samples larger than $25$ or $30$ large enough is far from satisfying. Fortunately, \cite{anastasiou2015bounds} have done some pioneer work aimed at answering this exact question. We turn in the next section for a brief illustration of their result on the the closeness to the asymptotic normal distribution from the MLE approximated using finitely many observations.
+While this is a nice property, it remains rather theoretical. In practice, when we work with finitely many observations, it is not clear how far away we are from the asymptotic normality. And existing heuristics from undergraduate statistics courses such as calling samples larger than $25$ or $30$ large enough is far from satisfying. Fortunately, \cite{anastasiou2015bounds} have done some pioneer work aimed at answering this exact question. We turn in the next section for a brief illustration of their result on the the closeness from the MLE approximated using finitely many observations to the asymptotic normal distribution.
 % ...

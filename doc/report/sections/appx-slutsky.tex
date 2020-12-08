@@ -1,0 +1,49 @@
+% !TEX root = ../main.tex
+
+% Exercises section
+
+\section{Proof of Slutsky's Theorem}
+\begin{theorem}
+If $X_n \convD X$ and $Y_n \convP c$, then $X_nY_n \convD cX$.
+\end{theorem}
+\begin{proof}
+We begin by noting that this proof follows closely to the lecture notes from STAT 560 by Professor Ruben Zamar.\\\\
+We begin by writing $X_nY_n = X_n(Y_n-c)+cX_n$. Then, in order to achieve the final result, we need to show the following
+\begin{itemize}
+\item If $X_n \convD X$ and $Y_n \convP c$, then $X_n + Y_n \convD X + c$.
+\item If $X_n \convD X$ and $Y_n \convP 0$, then $X_nY_n \convP 0$.
+\item If $X_n \convD X$, then $cX_n \convD cX$.
+\end{itemize}
+If we have the above results, then 
+\begin{align*}
+Y_n - c \convP 0 \implies X_n(Y_n-c) \convP 0 \implies \implies X_n(Y_n-c) \convD 0 \implies X_nY_n = X_n(Y_n-c)+cX_n \convD 0 + cX = cX.
+\end{align*}
+\end{proof}
+\begin{lemma}
+If $X_n \convD X$ and $Y_n \convP c$, then $X_n + Y_n \convD X + c$.
+\end{lemma}
+\begin{proof}
+
+\end{proof}
+\begin{lemma}
+If $X_n \convD X$ and $Y_n \convP 0$, then $X_nY_n \convP 0$.
+\end{lemma}
+\begin{proof}
+By definition, for any $\epsilon>0$, given $\delta>0$, we can find $N$ such that $\forall n\geq N$, $X_nY_n\convP 0 \implies P(|X_nY_n|<\epsilon)>1-\delta$.\\\\
+First, we find $K$ such that $K,-K$ are continuity points of $F_X$, the CDF of $X$, and
+\[
+P(|X|\leq K) = P(-K\leq X\leq K) = F_X(K) - F_X(-K) \geq 1-\frac{\delta}{4}.
+\]
+Then
+\begin{align*}
+P(|X_n|\leq K) &= P(-K\leq X_n \leq K)\\
+&= F_{X_n}(K) - F_{X_n}(-K)\\
+&= F_X(K) - F_X(-K) - (F_{X}(K) - F_{X_n}(K)) - (F_{X_n}(-K) - F_{X_n}(-K))
+\end{align*}
+\end{proof}
+\begin{lemma}
+If $X_n \convD X$, then $cX_n \convD cX$.
+\end{lemma}
+\begin{proof}
+
+\end{proof}
