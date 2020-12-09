@@ -58,7 +58,7 @@ for (i in 1:N){
   mle10[i] = mle
 }
 
-# saving plots for N=10
+# saving plot for N=10
 x_seq = seq(0, 4, length = N)
 y_seq = dnorm(x_seq, mean=theta0, sd=sqrt(1/(10*fisher())))
 
@@ -69,7 +69,7 @@ hist(mle10, prob=TRUE, ylim=c(0,3), xlim=c(0,4),
 lines(x=x_seq, y=y_seq, col="red")
 dev.off()
 
-# saving plots for N=40
+# saving plot for N=40
 y_seq = dnorm(x_seq, mean=theta0, sd=sqrt(1/(40*fisher())))
 
 png("../misc/N40.jpg", width = 300, height = 300)
@@ -79,7 +79,7 @@ hist(mle40, prob=TRUE, ylim=c(0,3), xlim=c(0,4),
 lines(x=x_seq, y=y_seq, col="red")
 dev.off()
 
-# saving plots for N=70
+# saving plot for N=70
 y_seq = dnorm(x_seq, mean=theta0, sd=sqrt(1/(70*fisher())))
 
 png("../misc/N70.jpg", width = 300, height = 300)
@@ -89,7 +89,7 @@ hist(mle70, prob=TRUE, ylim=c(0,3), xlim=c(0,4),
 lines(x=x_seq, y=y_seq, col="red")
 dev.off()
 
-# saving plots for N=100
+# saving plot for N=100
 y_seq = dnorm(x_seq, mean=theta0, sd=sqrt(1/(100*fisher())))
 
 png("../misc/N100.jpg", width = 300, height = 300)
